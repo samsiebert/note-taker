@@ -5,10 +5,11 @@ const notes  = require('./Develop/db/db.json');
 
 const app = express();
 
-app.use(express.static('Develop'));
-app.use(express.static('public'));
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 
