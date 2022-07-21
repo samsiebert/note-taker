@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { notes } = require('./db/db.json');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     // console.log(req.body.id);
     // req.body.id = notes.length.toString();
+
+    req.body.id = uuidv4();
 
     const note = createNewNote(req.body, notes);
     res.json(note);
