@@ -5,7 +5,8 @@ const notes  = require('./Develop/db/db.json');
 
 const app = express();
 
-
+app.use(express.static('Develop'));
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -20,7 +21,8 @@ function createNewNote(body, notesArray) {
     );
 
     return note;
-}
+
+};
 
 app.get('/api/notes', (req, res) => {
     res.json(notes);
