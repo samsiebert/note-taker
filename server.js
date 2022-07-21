@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const notes  = require('./Develop/db/db.json');
+const { notes } = require('./db/db.json');
 
 const app = express();
 
@@ -17,7 +17,7 @@ function createNewNote(body, notesArray) {
     const note = body;
     notesArray.push(note);
     fs.writeFileSync(
-        path.join(__dirname, './Develop/db/db.json'),
+        path.join(__dirname, './db/db.json'),
         JSON.stringify({notes: notesArray}, null, 2)
     );
 
@@ -26,24 +26,26 @@ function createNewNote(body, notesArray) {
 };
 
 app.get('/api/notes', (req, res) => {
+    console.log(notes);
     res.json(notes);
 });
 
 app.post('/api/notes', (req, res) => {
-    req.body.id = notes.length.toString();
+    // console.log(req.body.id);
+    // req.body.id = notes.length.toString();
 
     const note = createNewNote(req.body, notes);
-    res.json(req.body);
+    res.json(note);
 
 })
 
 
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.listen(PORT, (error) => {
